@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+venv/
+.venv/
+
+# Vercel
+.vercel
+.env
+.env.local
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Output (generated decks shouldn't be committed)
+output/
+*.pdf
+
+# Node (just in case)
+node_modules/

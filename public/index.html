@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCOTT Automation Deck Builder</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <div class="brand-mark">SCOTT</div>
+        <div class="brand-sub">Automation Division</div>
+      </div>
+      <div class="header-title">Deck Builder</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="intro">
+      <h1>Build a customer pitch deck</h1>
+      <p class="lede">Tell us about the customer and the project. We'll generate a branded SCOTT pitch deck and a matching selling script you can take into the meeting.</p>
+    </div>
+
+    <div class="summary-bar" id="summaryBar">15 slides total — fill in the form below to customize</div>
+
+    <form id="deckForm" autocomplete="off">
+
+      <!-- Section: Customer -->
+      <section class="card">
+        <div class="card-head">
+          <span class="num">1</span>
+          <h2>Customer</h2>
+        </div>
+        <p class="help">Goes on slide 2 of the deck, centered below the diamond graphic. Choose one — name OR logo.</p>
+
+        <div class="seg-control" role="tablist" aria-label="Customer identifier type">
+          <button type="button" class="seg-btn active" data-mode="name" id="segName">Use a name</button>
+          <button type="button" class="seg-btn" data-mode="logo" id="segLogo">Upload a logo</button>
+        </div>
+
+        <div id="modeName" class="seg-panel">
+          <label class="field">
+            <span class="label">Customer name <span class="req">*</span></span>
+            <input type="text" name="customerName" placeholder="e.g. Acme Manufacturing" />
+          </label>
+        </div>
+
+        <div id="modeLogo" class="seg-panel hidden">
+          <span class="label">Customer logo <span class="req">*</span></span>
+          <label for="customerLogo" class="upload-zone" id="logoUploadZone">
+            <div class="upload-zone-inner">
+              <div class="upload-icon">⬆</div>
+              <div class="upload-msg">Click or drop a PNG, JPG, or SVG here</div>
+              <div class="upload-sub">Max 2 MB · transparent background recommended</div>
+            </div>
+            <img id="logoPreview" class="logo-preview hidden" alt="Logo preview" />
+            <button type="button" class="logo-remove hidden" id="logoRemove" aria-label="Remove logo">✕</button>
+          </label>
+          <input type="file" id="customerLogo" name="customerLogo" accept="image/png,image/jpeg,image/svg+xml" class="visually-hidden" />
+        </div>
+      </section>
+
+      <!-- Section: Why this project (StoryBrand) -->
+      <section class="card card-accent">
+        <div class="card-head">
+          <span class="num accent">2</span>
+          <h2>Why this project</h2>
+          <span class="pill"><span class="dot"></span> StoryBrand</span>
+        </div>
+        <p class="help">Tell the customer's story so they see SCOTT as the guide who solves their problem. Each answer becomes one slide.</p>
+
+        <label class="field">
+          <span class="label">The customer's pain point <span class="req">*</span></span>
+          <textarea name="painPoint" rows="3" required placeholder='What is keeping them up at night? Speak in their language. e.g., "Operators on the press line keep getting wrist injuries. Three OSHA claims this year, can&apos;t fill the openings, overtime is climbing."'></textarea>
+          <small class="hint">→ Becomes the "Here's what we heard" slide</small>
+        </label>
+
+        <div class="field">
+          <span class="label">Value drivers — what's at stake <span class="req">*</span></span>
+          <small class="hint" style="margin-bottom: 10px; display:block;">Each tag auto-inserts one national-stat slide right after the pain point so the customer sees they're not alone.</small>
+          <div class="tag-grid" id="tagGrid"></div>
+        </div>
+
+        <label class="field">
+          <span class="label">What this project offers them <span class="req">*</span></span>
+          <textarea name="successState" rows="3" required placeholder='Paint the after-picture. e.g., "A press line that runs three shifts without overtime, zero recordable injuries, and 18% more parts out the door each week."'></textarea>
+          <small class="hint">→ Becomes the "What you get" slide</small>
+        </label>
+
+        <div class="field">
+          <span class="label">How SCOTT solves it — 3 steps <span class="req">*</span></span>
+          <small class="hint" style="margin-bottom:8px; display:block;">Three steps is the StoryBrand sweet spot. Each step: a short title and a one-sentence description.</small>
+          <div class="step-inputs">
+            <div class="step-row">
+              <input type="text" name="step1Title" required placeholder="Step 1 title — e.g. Design and build" />
+              <textarea name="step1Body" rows="2" required placeholder="What happens in this step"></textarea>
+            </div>
+            <div class="step-row">
+              <input type="text" name="step2Title" required placeholder="Step 2 title — e.g. Integrate and commission" />
+              <textarea name="step2Body" rows="2" required placeholder="What happens in this step"></textarea>
+            </div>
+            <div class="step-row">
+              <input type="text" name="step3Title" required placeholder="Step 3 title — e.g. Train and support" />
+              <textarea name="step3Body" rows="2" required placeholder="What happens in this step"></textarea>
+            </div>
+          </div>
+        </label>
+
+        <label class="field">
+          <span class="label">The call to action — what's the next step?</span>
+          <textarea name="callToAction" rows="2" placeholder='e.g., "Walk the press line with our engineering team next Thursday. We&apos;ll bring a draft 3D CAD layout the following week."'></textarea>
+          <small class="hint">→ Becomes the "Your next step" slide. Keep it concrete and time-bound.</small>
+        </label>
+      </section>
+
+      <!-- Section: SCOTT content sections -->
+      <section class="card">
+        <div class="card-head">
+          <span class="num">3</span>
+          <h2>SCOTT capabilities sections</h2>
+        </div>
+        <p class="help">Toggle whole sections on/off, or expand to pick individual sub-slides.</p>
+
+        <div id="sectionsContainer">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Section: Previous projects -->
+      <section class="card">
+        <div class="card-head">
+          <span class="num">4</span>
+          <h2>Previous project examples</h2>
+          <button type="button" class="link-btn" id="selectAllProjects">Select all</button>
+          <button type="button" class="link-btn" id="clearProjects">Clear</button>
+        </div>
+        <p class="help">Pick the case studies most relevant to this customer.</p>
+        <div class="proj-grid" id="projectsGrid"></div>
+      </section>
+
+      <!-- Section: Custom proposal slides -->
+      <section class="card">
+        <div class="card-head">
+          <span class="num">5</span>
+          <h2>Project proposal slides</h2>
+          <span class="pill">Uses blank template</span>
+        </div>
+        <p class="help">Optional. Build custom slides for this customer's proposal. Add an image, a short GIF, or a link to a video — drag <span style="font-family: monospace">⠿</span> to reorder. They appear between Previous Projects and HPUs.</p>
+        <div id="proposalsContainer"></div>
+        <button type="button" class="btn-secondary full-width" id="addProposalBtn">+ Add a slide</button>
+      </section>
+
+      <!-- Submit -->
+      <div class="submit-area">
+        <button type="submit" class="btn-primary" id="submitBtn">
+          <span class="btn-label">Generate deck + script</span>
+        </button>
+        <p class="submit-help">Generates two files: a PowerPoint deck and a Word doc selling script. Downloads start automatically.</p>
+      </div>
+
+    </form>
+
+    <!-- Status overlay shown during generation -->
+    <div id="statusOverlay" class="overlay hidden">
+      <div class="overlay-card">
+        <div class="spinner"></div>
+        <div class="overlay-msg" id="overlayMsg">Building your deck…</div>
+        <div class="overlay-sub" id="overlaySub">This usually takes 10–20 seconds.</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>SCOTT Industrial Systems — Automation Division · Internal beta</span>
+    </div>
+  </footer>
+
+  <script src="/js/form.js"></script>
+</body>
+</html>
