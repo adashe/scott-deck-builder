@@ -16,7 +16,7 @@
         },
         {
             "source": "/scott-deck-builder/(.*)",
-            "destination": "/$1"
+            "destination": "$1"
         },
         {
             "source": "/api/(.*)",
