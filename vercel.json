@@ -1,16 +1,27 @@
 {
-  "version": 2,
-  "functions": {
-    "api/generate.py": {
-      "runtime": "@vercel/python@4.3.0",
-      "memory": 1024,
-      "maxDuration": 60,
-      "includeFiles": "templates/**"
-    }
-  },
-  "rewrites": [
-    { "source": "/api/generate", "destination": "/api/generate" },
-    { "source": "/(.*)", "destination": "/public/$1" }
-  ],
-  "cleanUrls": true
+    "version": 2,
+    "functions": {
+        "api/generate.py": {
+            "runtime": "@vercel/python@4.3.0",
+            "memory": 1024,
+            "maxDuration": 60,
+            "includeFiles": "templates/**"
+        }
+    },
+
+    "rewrites": [
+        {
+            "source": "/scott-deck-builder/api/(.*)",
+            "destination": "/api/generate.py"
+        },
+        {
+            "source": "/scott-deck-builder/(.*)",
+            "destination": "/$1"
+        },
+        {
+            "source": "/api/(.*)",
+            "destination": "/api/generate.py"
+        }
+    ],
+    "cleanUrls": true
 }
