@@ -8,19 +8,30 @@
             "includeFiles": "templates/**"
         }
     },
-
     "rewrites": [
         {
-            "source": "/scott-deck-builder/api/(.*)",
+            "source": "/css/:asset*",
+            "destination": "/css/:asset*"
+        },
+        {
+            "source": "/js/:asset*",
+            "destination": "/js/:asset*"
+        },
+        {
+            "source": "/scott-deck-builder/api/:path*",
             "destination": "/api/generate.py"
         },
         {
-            "source": "/scott-deck-builder/(.*)",
-            "destination": "$1"
+            "source": "/api/:path*",
+            "destination": "/api/generate.py"
         },
         {
-            "source": "/api/(.*)",
-            "destination": "/api/generate.py"
+            "source": "/scott-deck-builder/:path*",
+            "destination": "/:path*"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ],
     "cleanUrls": true
