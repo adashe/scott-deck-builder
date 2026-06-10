@@ -19,11 +19,11 @@
         },
         {
             "source": "/scott-deck-builder/api/:path*",
-            "destination": "/api/generate.py"
+            "destination": "/api/generate"
         },
         {
             "source": "/api/:path*",
-            "destination": "/api/generate.py"
+            "destination": "/api/generate"
         },
         {
             "source": "/scott-deck-builder/:path*",
