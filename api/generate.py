@@ -28,7 +28,6 @@ import tempfile
 import traceback
 import urllib.request
 import urllib.error
-from urllib.parse import quote
 import cgi
 from http.server import BaseHTTPRequestHandler
 from pathlib import Path
@@ -103,7 +102,6 @@ def _upload_to_blob(zip_bytes: bytes, filename: str) -> str:
     Docs: https://vercel.com/docs/storage/vercel-blob/using-blob-sdk#upload-a-file
     """
     token = os.environ.get("BLOB_READ_WRITE_TOKEN")
-    safe_filename = quote(filename)
 
     if not token:
         raise RuntimeError(
@@ -113,7 +111,7 @@ def _upload_to_blob(zip_bytes: bytes, filename: str) -> str:
         )
  
     # PUT to the Vercel Blob API
-    api_url = f"https://blob.vercel-storage.com/{safe_filename}?access=public"
+    api_url = f"https://blob.vercel-storage.com/{filename}?access=public"
     req = urllib.request.Request(
         api_url,
         data=zip_bytes,
@@ -123,7 +121,6 @@ def _upload_to_blob(zip_bytes: bytes, filename: str) -> str:
             "Content-Type": "application/zip",
             # access=public makes the URL directly downloadable by the browser
             "x-api-version": "7",
-            "x-content-type": "application/zip",
         },
     )
     with urllib.request.urlopen(req) as resp:

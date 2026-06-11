@@ -3,7 +3,6 @@
     "functions": {
         "api/generate.py": {
             "runtime": "@vercel/python@4.3.0",
-            "memory": 1024,
             "maxDuration": 60,
             "includeFiles": "templates/**"
         }
