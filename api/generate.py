@@ -110,7 +110,7 @@ def _upload_to_blob(zip_bytes: bytes, filename: str) -> str:
         )
  
     # PUT to the Vercel Blob API
-    api_url = f"https://blob.vercel-storage.com/{filename}?access=public"
+    api_url = f"https://blob.vercel-storage.com/{filename}"
     req = urllib.request.Request(
         api_url,
         data=zip_bytes,
