@@ -403,11 +403,11 @@ function renderValueDrivers() {
         lbl.className = "tag-opt";
         lbl.dataset.id = t.id;
         lbl.innerHTML = `
-<input type="checkbox" name="valueDriver" value="${t.id}" />
-<div>
-<div class="tag-name">${t.name}</div>
-<span class="tag-desc">${t.desc}</span>
-</div>`;
+      <input type="checkbox" name="valueDriver" value="${t.id}" />
+      <div>
+        <div class="tag-name">${t.name}</div>
+        <span class="tag-desc">${t.desc}</span>
+      </div>`;
         grid.appendChild(lbl);
     });
     grid.addEventListener("change", (e) => {
@@ -431,12 +431,12 @@ function renderSections() {
         block.dataset.sectionId = sec.id;
 
         let headerHtml = `
-<div class="section-block-head">
-<input type="checkbox" class="sec-master" data-section="${sec.id}" checked />
-<div class="t-body">
-<p class="t-title">${sec.title}</p>
-<p class="t-meta">${sec.summary}</p>
-</div>
+      <div class="section-block-head">
+        <input type="checkbox" class="sec-master" data-section="${sec.id}" checked />
+        <div class="t-body">
+          <p class="t-title">${sec.title}</p>
+          <p class="t-meta">${sec.summary}</p>
+        </div>
     `;
         if (sec.subslides) {
             headerHtml += `<button type="button" class="expand-btn" data-toggle="${sec.id}" aria-label="Expand">▾</button>`;
@@ -448,14 +448,14 @@ function renderSections() {
             subHtml = `<div class="sub-slides" id="sub-${sec.id}" style="display:none;"><div class="sub-slides-inner">`;
             sec.subslides.forEach((s) => {
                 subHtml += `
-<label class="sub-slide">
-<input type="checkbox" class="sub-cb" data-parent="${sec.id}" data-slide="${s.num}" checked />
-<span class="ss-num">${s.num}</span>
-<div>
-<div class="ss-title">${s.title}</div>
-<div class="ss-desc">${s.desc}</div>
-</div>
-</label>`;
+          <label class="sub-slide">
+            <input type="checkbox" class="sub-cb" data-parent="${sec.id}" data-slide="${s.num}" checked />
+            <span class="ss-num">${s.num}</span>
+            <div>
+              <div class="ss-title">${s.title}</div>
+              <div class="ss-desc">${s.desc}</div>
+            </div>
+          </label>`;
             });
             subHtml += `</div></div>`;
         }
@@ -478,12 +478,12 @@ function renderProjects() {
         lbl.dataset.id = p.id;
         const checked = i < 2 ? "checked" : "";
         lbl.innerHTML = `
-<input type="checkbox" name="project" value="${p.id}" ${checked} />
-<div>
-<span class="proj-tag">${p.tag}</span>
-<p class="proj-title">${p.title}</p>
-<p class="proj-sub">${p.sub}</p>
-</div>`;
+      <input type="checkbox" name="project" value="${p.id}" ${checked} />
+      <div>
+        <span class="proj-tag">${p.tag}</span>
+        <p class="proj-title">${p.title}</p>
+        <p class="proj-sub">${p.sub}</p>
+      </div>`;
         if (checked) lbl.classList.add("checked");
         grid.appendChild(lbl);
     });
@@ -517,52 +517,52 @@ function addProposal() {
     card.draggable = true;
     card.dataset.id = id;
     card.innerHTML = `
-<div class="proposal-head">
-<span class="drag-handle" aria-label="Drag to reorder">⠿</span>
-<strong class="p-title">Proposal slide</strong>
-<button type="button" class="icon-btn remove-btn" aria-label="Remove">✕</button>
-</div>
-<div class="field">
-<span class="label">Slide title</span>
-<input type="text" name="proposalTitle[]" placeholder="e.g. Proposed solution — Phase 1" />
-</div>
-<div class="field">
-<span class="label">Body content (optional)</span>
-<textarea name="proposalBody[]" rows="3" placeholder="Short description shown on the slide. Plain text is fine; blank lines separate paragraphs."></textarea>
-</div>
-<div class="field">
-<span class="label">Visual (optional)</span>
-<div class="media-row">
-<div class="media-tabs" role="tablist" aria-label="Media type">
-<button type="button" class="media-tab active" data-pane="none">None</button>
-<button type="button" class="media-tab" data-pane="image">Image / GIF</button>
-<button type="button" class="media-tab" data-pane="video">Video link</button>
-</div>
- 
+    <div class="proposal-head">
+      <span class="drag-handle" aria-label="Drag to reorder">⠿</span>
+      <strong class="p-title">Proposal slide</strong>
+      <button type="button" class="icon-btn remove-btn" aria-label="Remove">✕</button>
+    </div>
+    <div class="field">
+      <span class="label">Slide title</span>
+      <input type="text" name="proposalTitle[]" placeholder="e.g. Proposed solution — Phase 1" />
+    </div>
+    <div class="field">
+      <span class="label">Body content (optional)</span>
+      <textarea name="proposalBody[]" rows="3" placeholder="Short description shown on the slide. Plain text is fine; blank lines separate paragraphs."></textarea>
+    </div>
+    <div class="field">
+      <span class="label">Visual (optional)</span>
+      <div class="media-row">
+        <div class="media-tabs" role="tablist" aria-label="Media type">
+          <button type="button" class="media-tab active" data-pane="none">None</button>
+          <button type="button" class="media-tab" data-pane="image">Image / GIF</button>
+          <button type="button" class="media-tab" data-pane="video">Video link</button>
+        </div>
+
         <div class="media-pane active" data-kind="none">
-<p class="media-info" style="margin: 0;">Text-only slide.</p>
-</div>
- 
+          <p class="media-info" style="margin: 0;">Text-only slide.</p>
+        </div>
+
         <div class="media-pane" data-kind="image">
-<label class="upload-zone media-upload-zone">
-<div class="upload-zone-inner">
-<div class="upload-icon">⬆</div>
-<div class="upload-msg">Drop a PNG, JPG, or GIF here</div>
-<div class="upload-sub">Up to 10 MB · larger files embed slowly</div>
-</div>
-<img class="media-thumb hidden" alt="" />
-<button type="button" class="logo-remove media-remove hidden" aria-label="Remove">✕</button>
-<input type="file" class="visually-hidden media-file-input" accept="image/png,image/jpeg,image/gif" />
-</label>
-<p class="media-info hidden"></p>
-</div>
- 
+          <label class="upload-zone media-upload-zone">
+            <div class="upload-zone-inner">
+              <div class="upload-icon">⬆</div>
+              <div class="upload-msg">Drop a PNG, JPG, or GIF here</div>
+              <div class="upload-sub">Up to 10 MB · larger files embed slowly</div>
+            </div>
+            <img class="media-thumb hidden" alt="" />
+            <button type="button" class="logo-remove media-remove hidden" aria-label="Remove">✕</button>
+            <input type="file" class="visually-hidden media-file-input" accept="image/png,image/jpeg,image/gif" />
+          </label>
+          <p class="media-info hidden"></p>
+        </div>
+
         <div class="media-pane" data-kind="video">
-<input type="url" class="video-url-input" placeholder="https://youtu.be/... or SharePoint, Drive, Vimeo, etc." />
-<p class="media-info">A clickable thumbnail is added to the slide; the customer clicks to open the video.</p>
-</div>
-</div>
-</div>
+          <input type="url" class="video-url-input" placeholder="https://youtu.be/... or SharePoint, Drive, Vimeo, etc." />
+          <p class="media-info">A clickable thumbnail is added to the slide; the customer clicks to open the video.</p>
+        </div>
+      </div>
+    </div>
   `;
 
     // Remove button
@@ -892,8 +892,7 @@ async function handleSubmit(e) {
         // streaming the zip directly — avoids the 4.5 MB response payload limit.
         const data = await response.json();
         if (data.error) throw new Error(data.error);
-        if (!data.downloadUrl)
-            throw new Error("No download URL returned from server.");
+        if (!data.downloadUrl) throw new Error("No download URL returned from server.");
 
         showOverlay("Done!", "Your download should start automatically.");
 
