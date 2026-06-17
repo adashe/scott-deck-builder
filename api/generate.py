@@ -118,7 +118,7 @@ def _upload_to_blob(zip_bytes: bytes, filename: str) -> str:
         data=zip_bytes,
         method="PUT",
         headers={
-            # "Authorization": f"Bearer {token}",
+            "Authorization": f"Bearer {token}",
             "Content-Type": "application/zip",
             "x-api-version": "7",
         },
