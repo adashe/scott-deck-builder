@@ -32,6 +32,12 @@ import cgi
 from http.server import BaseHTTPRequestHandler
 from pathlib import Path
 
+import jwt
+import json
+from http.server import BaseHTTPRequestHandler
+from urllib.parse import urlparse, parse_qs
+from http.cookies import SimpleCookie
+
 # Add parent dir to path so we can import lib/
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -140,6 +146,19 @@ def _upload_to_blob(zip_bytes: bytes, filename: str) -> str:
         raise RuntimeError(f"Blob API returned unexpected response: {result}")
     return download_url
 
+## Grab your secret securely from Vercel's environment variables
+JWT_SECRET = os.environ.get("SUPABASE_JWT_SECRET")
+
+def verify_supabase_user(token):
+    """Cryptographically validates the Supabase JWT using the shared secret."""
+    if not token:
+        return None
+    try:
+        # Decodes, verifies expiration (exp), and ensures it matches Supabase's audience
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"], audience="authenticated")
+        return payload
+    except (jwt.ExpiredSignatureError, jwt.InvalidTokenError):
+        return None
 
 # ---------------------------------------------------------------------------
 # Serverless handler
@@ -156,14 +175,80 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        """Friendly message if someone visits /api/generate in a browser."""
+        # 1. Parse the incoming URL and look for a token parameter
+        parsed_url = urlparse(self.path)
+        query_params = parse_qs(parsed_url.query)
+        token_in_url = query_params.get("token", [None])[0]
+
+        # 2. URL CLEANING STEP: If a token exists in the query string, consume and strip it
+        if token_in_url:
+            user_data = verify_supabase_user(token_in_url)
+            
+            if not user_data:
+                # Token was forged, broken, or expired
+                self.send_response(401)
+                self.send_header("Content-Type", "text/plain; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(b"Unauthorized: Invalid or expired auth token.")
+                return
+
+            # Token is valid! Bake a secure, HTTP-Only session cookie
+            cookie = SimpleCookie()
+            cookie["scott_session"] = token_in_url
+            cookie["scott_session"]["path"] = "/"
+            cookie["scott_session"]["httponly"] = True  # Prevents XSS script read access
+            cookie["scott_session"]["secure"] = True    # Enforces HTTPS delivery
+            cookie["scott_session"]["samesite"] = "Lax"
+
+            # Clean the URL by redirecting back to the exact same path MINUS the query token
+            self.send_response(302)
+            self.send_header("Set-Cookie", cookie.output(header=""))
+            self.send_header("Location", parsed_url.path) # Redirects straight to /api/generate cleanly
+            self.end_headers()
+            return
+
+        # 3. COOKIE EVALUATION: If no token in URL, check if a valid session cookie exists
+        cookie_header = self.headers.get("Cookie", "")
+        cookies = SimpleCookie(cookie_header)
+        session_cookie = cookies.get("scott_session")
+        
+        # Verify the cookie content if present
+        is_authenticated = False
+        if session_cookie:
+            user_data = verify_supabase_user(session_cookie.value)
+            if user_data:
+                is_authenticated = True
+
+        # 4. PRESERVE ORIGINAL FUNCTIONALITY: Serve the browser message
         self.send_response(200)
         self.send_header("Content-Type", "text/plain; charset=utf-8")
         self.end_headers()
-        self.wfile.write(b"SCOTT Automation Deck Builder API. POST a multipart form to this endpoint.")
+        
+        # Optionally customize text based on login state
+        if is_authenticated:
+            auth_msg = b"\nStatus: Authenticated Session Confirmed."
+        else:
+            auth_msg = b"\nStatus: Public (No active session cookie detected)."
+            
+        message = b"SCOTT Automation Deck Builder API. POST a multipart form to this endpoint." + auth_msg
+        self.wfile.write(message)
 
     def do_POST(self):
         try:
+            # =================================================================
+            # SECURITY LAYER: Session Cookie Validation
+            # =================================================================
+            cookie_header = self.headers.get("Cookie", "")
+            cookies = SimpleCookie(cookie_header)
+            session_cookie = cookies.get("scott_session")
+
+            # Validate the cookie. If it does not exist or fails verification, block access.
+            if not session_cookie or not verify_supabase_user(session_cookie.value):
+                return self._send_error(401, "Unauthorized: Valid session cookie required.")
+
+            # =================================================================
+            # ORIGINAL FUNCTIONALITY: Safe Processing Resumes Below
+            # =================================================================
             content_type = self.headers.get("Content-Type", "")
             if not content_type.startswith("multipart/form-data"):
                 return self._send_error(400, "Expected multipart/form-data request")
@@ -220,7 +305,6 @@ class handler(BaseHTTPRequestHandler):
                 filename = f"SCOTT_{customer}_Deck_Bundle.zip"
 
                 # --- Upload to Vercel Blob; return download URL ---
-                # This sidesteps the 4.5 MB serverless response payload limit.
                 download_url = _upload_to_blob(zip_bytes, filename)
 
                 body = json.dumps({"downloadUrl": download_url}).encode("utf-8")
@@ -234,6 +318,86 @@ class handler(BaseHTTPRequestHandler):
         except Exception as e:
             print("ERROR in /api/generate:", traceback.format_exc(), file=sys.stderr)
             return self._send_error(500, f"Server error: {e}")
+
+    # def do_GET(self):
+    #     """Friendly message if someone visits /api/generate in a browser."""
+    #     self.send_response(200)
+    #     self.send_header("Content-Type", "text/plain; charset=utf-8")
+    #     self.end_headers()
+    #     self.wfile.write(b"SCOTT Automation Deck Builder API. POST a multipart form to this endpoint.")
+
+    # def do_POST(self):
+    #     try:
+    #         content_type = self.headers.get("Content-Type", "")
+    #         if not content_type.startswith("multipart/form-data"):
+    #             return self._send_error(400, "Expected multipart/form-data request")
+
+    #         environ = {
+    #             "REQUEST_METHOD": "POST",
+    #             "CONTENT_TYPE": content_type,
+    #             "CONTENT_LENGTH": self.headers.get("Content-Length", "0"),
+    #         }
+    #         form = cgi.FieldStorage(
+    #             fp=self.rfile,
+    #             headers=self.headers,
+    #             environ=environ,
+    #             keep_blank_values=True,
+    #         )
+
+    #         # --- Parse meta JSON ---
+    #         meta_field = form.getvalue("meta")
+    #         if not meta_field:
+    #             return self._send_error(400, "Missing 'meta' field in form data")
+    #         try:
+    #             meta = json.loads(meta_field)
+    #         except json.JSONDecodeError as e:
+    #             return self._send_error(400, f"Invalid JSON in meta: {e}")
+
+    #         with tempfile.TemporaryDirectory() as tmp:
+    #             upload_dir = os.path.join(tmp, "uploads")
+    #             os.makedirs(upload_dir, exist_ok=True)
+
+    #             # --- Customer logo ---
+    #             customer_logo_path = None
+    #             if "customerLogo" in form and form["customerLogo"].filename:
+    #                 customer_logo_path = self._save_upload(form["customerLogo"], upload_dir, "customer_logo")
+
+    #             # --- Proposal images ---
+    #             proposal_image_paths = {}
+    #             for key in form.keys():
+    #                 if key.startswith("proposalImage_"):
+    #                     try:
+    #                         idx = int(key.split("_", 1)[1])
+    #                     except ValueError:
+    #                         continue
+    #                     if form[key].filename:
+    #                         saved = self._save_upload(form[key], upload_dir, f"proposal_{idx}")
+    #                         proposal_image_paths[idx] = saved
+
+    #             # --- Generate deck + script ---
+    #             out_dir = os.path.join(tmp, "out")
+    #             os.makedirs(out_dir, exist_ok=True)
+    #             deck_path, script_path = _generate(meta, customer_logo_path, proposal_image_paths, out_dir)
+    #             zip_bytes = _zip_outputs(deck_path, script_path)
+
+    #             customer = _safe_filename(meta.get("customerName", ""))
+    #             filename = f"SCOTT_{customer}_Deck_Bundle.zip"
+
+    #             # --- Upload to Vercel Blob; return download URL ---
+    #             # This sidesteps the 4.5 MB serverless response payload limit.
+    #             download_url = _upload_to_blob(zip_bytes, filename)
+
+    #             body = json.dumps({"downloadUrl": download_url}).encode("utf-8")
+    #             self.send_response(200)
+    #             self.send_header("Content-Type", "application/json")
+    #             self.send_header("Content-Length", str(len(body)))
+    #             self.send_header("Access-Control-Allow-Origin", "*")
+    #             self.end_headers()
+    #             self.wfile.write(body)
+
+    #     except Exception as e:
+    #         print("ERROR in /api/generate:", traceback.format_exc(), file=sys.stderr)
+    #         return self._send_error(500, f"Server error: {e}")
 
     def _save_upload(self, field, upload_dir: str, basename: str) -> str:
         """Save an uploaded file field to disk; return the path."""
