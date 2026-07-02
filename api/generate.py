@@ -37,6 +37,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lib.deck_builder import build_deck
 from lib.script_builder import build_script
+from lib.auth import request_has_valid_session, PORTAL_LOGIN_URL
 
 
 # ---------------------------------------------------------------------------
@@ -164,6 +165,12 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         try:
+            # --- Auth check: reject generation requests with no valid session ---
+            # This mirrors the page guard in api/index.py. Without this, someone
+            # could skip the login redirect and POST directly to this endpoint.
+            if not request_has_valid_session(self.headers):
+                return self._send_error(401, "Not authenticated. Please log in through the portal.")
+
             content_type = self.headers.get("Content-Type", "")
             if not content_type.startswith("multipart/form-data"):
                 return self._send_error(400, "Expected multipart/form-data request")

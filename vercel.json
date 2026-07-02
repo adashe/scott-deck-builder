@@ -5,6 +5,12 @@
             "runtime": "@vercel/python@4.3.0",
             "maxDuration": 60,
             "includeFiles": "templates/**"
+        },
+        "api/index.py": {
+            "runtime": "@vercel/python@4.3.0"
+        },
+        "api/auth_callback.py": {
+            "runtime": "@vercel/python@4.3.0"
         }
     },
     "rewrites": [
@@ -25,12 +31,32 @@
             "destination": "/api/generate"
         },
         {
+            "source": "/scott-deck-builder/auth-callback",
+            "destination": "/api/auth_callback"
+        },
+        {
+            "source": "/auth-callback",
+            "destination": "/api/auth_callback"
+        },
+        {
+            "source": "/scott-deck-builder/",
+            "destination": "/api/index"
+        },
+        {
+            "source": "/scott-deck-builder",
+            "destination": "/api/index"
+        },
+        {
+            "source": "/",
+            "destination": "/api/index"
+        },
+        {
             "source": "/scott-deck-builder/:path*",
             "destination": "/:path*"
         },
         {
             "source": "/(.*)",
-            "destination": "/index.html"
+            "destination": "/api/index"
         }
     ],
     "cleanUrls": true
