@@ -7,7 +7,8 @@
             "includeFiles": "templates/**"
         },
         "api/index.py": {
-            "runtime": "@vercel/python@4.3.0"
+            "runtime": "@vercel/python@4.3.0",
+            "includeFiles": "public/**"
         },
         "api/auth_callback.py": {
             "runtime": "@vercel/python@4.3.0"
@@ -27,7 +28,7 @@
             "destination": "/api/generate"
         },
         {
-            "source": "/api/:path*",
+            "source": "/api/generate",
             "destination": "/api/generate"
         },
         {
