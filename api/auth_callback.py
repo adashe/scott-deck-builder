@@ -32,7 +32,10 @@ from lib.auth import (
 )
 
 # Where to send the user after a successful login handoff.
-FORM_URL = "/scott-deck-builder/"
+# Must be the absolute Vercel URL so the browser stays on the same domain
+# as the cookie (vercel.app). If we use a relative URL, the portal proxy
+# resolves it to siscc-portal.com and the cookie never gets sent.
+FORM_URL = "https://scott-deck-builder.vercel.app/"
 
 
 class handler(BaseHTTPRequestHandler):
