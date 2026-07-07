@@ -1,6 +1,6 @@
 """Vercel serverless function — gates access to the deck builder's main page.
 
-This replaces static serving of public/index.html. Instead, every request
+This replaces static serving of public/index.html (now at templates/index.html). Instead, every request
 for the form page goes through this function first:
 
   - Valid session cookie  -> serve index.html
@@ -20,9 +20,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.auth import request_has_valid_session, PORTAL_LOGIN_URL
 
 _INDEX_HTML_CANDIDATES = [
-    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public", "index.html"),
-    "public/index.html",
-    os.path.join(os.getcwd(), "public", "index.html"),
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "templates", "index.html"),
+    "templates/index.html",
+    os.path.join(os.getcwd(), "templates", "index.html"),
 ]
 
 
@@ -31,7 +31,7 @@ def _load_index_html() -> str:
         if os.path.exists(path):
             with open(path, "r", encoding="utf-8") as f:
                 return f.read()
-    raise RuntimeError("Could not find public/index.html — checked: " + ", ".join(_INDEX_HTML_CANDIDATES))
+    raise RuntimeError("Could not find templates/index.html — checked: " + ", ".join(_INDEX_HTML_CANDIDATES))
 
 
 class handler(BaseHTTPRequestHandler):

@@ -8,7 +8,7 @@
         },
         "api/index.py": {
             "runtime": "@vercel/python@4.3.0",
-            "includeFiles": "public/**"
+            "includeFiles": "templates/**"
         },
         "api/auth_callback.py": {
             "runtime": "@vercel/python@4.3.0"
