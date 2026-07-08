@@ -175,7 +175,7 @@ def build_session_cookie_header(user_id: str) -> str:
 
 def build_clear_cookie_header() -> str:
     """Build a Set-Cookie header that immediately expires the session cookie."""
-    return f"{SESSION_COOKIE_NAME}=deleted; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Lax"
+    return f"{SESSION_COOKIE_NAME}=deleted; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=None"
 
 
 def request_has_valid_session(headers) -> bool:
