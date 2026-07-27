@@ -24,7 +24,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: U.S. Bureau of Labor Statistics, Survey of Occupational Injuries and Illnesses, 2024 (released Jan. 22, 2026)",
     },
-
     "labor": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE LABOR CRUNCH",
@@ -35,7 +34,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: Deloitte & The Manufacturing Institute, Taking Charge: Manufacturers Support Growth with Active Workforce Strategies, 2024",
     },
-
     "throughput": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "WHAT AUTOMATION DELIVERS",
@@ -47,7 +45,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: Published manufacturing automation case studies; McKinsey & Company, The Next Frontier of Automation in Manufacturing, 2022",
     },
-
     "downtime": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE COST OF STOPPING",
@@ -59,7 +56,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: Siemens / Senseye, True Cost of Downtime 2024 — figure reflects larger manufacturers; costs vary by facility size and sector",
     },
-
     "quality": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE QUALITY DIVIDEND",
@@ -71,7 +67,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: Published automation and machine-vision case studies; range is representative, not a universal benchmark",
     },
-
     "leadtime": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "TIME TO PAYBACK",
@@ -83,7 +78,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: Automation ROI literature broadly; McKinsey & Company, The Next Frontier of Automation in Manufacturing, 2024",
     },
-
     "ergonomics": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE ERGONOMIC TOLL",
@@ -95,7 +89,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: U.S. Bureau of Labor Statistics, Survey of Occupational Injuries and Illnesses, 2024",
     },
-
     "compliance": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE COST OF A CITATION",
@@ -107,7 +100,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: U.S. Occupational Safety and Health Administration, penalty schedule effective Jan. 15, 2025 (current through 2026)",
     },
-
     "energy": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE ENERGY OPPORTUNITY",
@@ -119,7 +111,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: U.S. Department of Energy / Hydraulic Institute — VFD energy savings guidance; 20–50% range is conservative relative to published studies",
     },
-
     "floorspace": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "RECLAIMING THE FLOOR",
@@ -131,7 +122,6 @@ STATS = {
         ),
         "source": "🔧 SCOTT Project Experience: Typical range based on SCOTT Industrial Systems project history; validated per project against your facility plan",
     },
-
     "retention": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE RETENTION FACTOR",
@@ -143,7 +133,6 @@ STATS = {
         ),
         "source": "📊 Industry Research: Deloitte & The Manufacturing Institute, Taking Charge: Manufacturers Support Growth with Active Workforce Strategies, 2024",
     },
-
     "insurance": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE MOD RATE COMPOUND",
