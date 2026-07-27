@@ -7,8 +7,7 @@
         },
         "api/index.py": {
             "includeFiles": "templates/**"
-        },
-        "api/auth_callback.py": {}
+        }
     },
     "rewrites": [
         {
