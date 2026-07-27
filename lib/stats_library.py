@@ -10,6 +10,7 @@ Each stat has:
   - big_number: the hero number (e.g. "2.5M", "$260K")
   - supporting: the prose paragraph explaining context
   - source: citation line at the bottom of the slide
+  - test line
 """
 
 STATS = {
