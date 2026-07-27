@@ -1,18 +1,17 @@
 """SCOTT Automation Deck Builder — stats library.
-
+ 
 For each value-driver tag the rep selects, we auto-insert one slide showing
 a credible national-level statistic. This module is the single source of truth
 for the stats; the deck_builder reads from it.
-
+ 
 Each stat has:
   - eyebrow: the small label above the headline (e.g. "WHAT'S AT STAKE")
   - headline: the large slide title
   - big_number: the hero number (e.g. "2.5M", "$260K")
   - supporting: the prose paragraph explaining context
   - source: citation line at the bottom of the slide
-  - test line
 """
-
+ 
 STATS = {
     "safety": {
         "eyebrow": "YOU'RE NOT ALONE \u2014 HERE'S WHAT'S AT STAKE",
@@ -23,7 +22,7 @@ STATS = {
             "Median 8 days away from work per case. 946,000 cases driven by overexertion "
             "and repetitive motion \u2014 the same forces hitting your production line."
         ),
-        "source": "Source: U.S. Bureau of Labor Statistics, Survey of Occupational Injuries and Illnesses, 2024",
+        "source": "📊 Industry Research: U.S. Bureau of Labor Statistics, Survey of Occupational Injuries and Illnesses, 2024 (released Jan. 22, 2026)",
     },
     "labor": {
         "eyebrow": "WHAT'S AT STAKE",
@@ -33,7 +32,7 @@ STATS = {
             "U.S. manufacturing jobs may go unfilled by 2033 if current trends hold. "
             "65% of manufacturers say attracting and retaining talent is their top business challenge."
         ),
-        "source": "Source: Deloitte & The Manufacturing Institute, Taking Charge of Manufacturing's Workforce Crisis, 2024",
+        "source": "📊 Industry Research: Deloitte & The Manufacturing Institute, Taking Charge: Manufacturers Support Growth with Active Workforce Strategies, 2024",
     },
     "throughput": {
         "eyebrow": "WHAT'S AT STAKE",
@@ -44,7 +43,7 @@ STATS = {
             "improvements of 15\u201330% in the same studies. Numbers vary by line type and "
             "current state, but the direction is consistent."
         ),
-        "source": "Source: McKinsey & Company, The next frontier of automation in manufacturing, 2022",
+        "source": "📊 Industry Research: Published manufacturing automation case studies; McKinsey & Company, The Next Frontier of Automation in Manufacturing, 2022",
     },
     "downtime": {
         "eyebrow": "WHAT'S AT STAKE",
@@ -55,18 +54,18 @@ STATS = {
             "per year across U.S. manufacturing. A typical plant logs roughly 800 hours of unplanned "
             "downtime annually."
         ),
-        "source": "Source: Siemens / Senseye, True Cost of Downtime Report, 2024",
+        "source": "📊 Industry Research: Siemens / Senseye, True Cost of Downtime 2024 — figure reflects larger manufacturers; costs vary by facility size and sector",
     },
     "quality": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE QUALITY DIVIDEND",
         "big_number": "60\u201370%",
         "supporting": (
-            "Reduction in scrap and false-reject rates documented in published case studies for "
-            "automated inspection. McKinsey research shows automation cuts errors by roughly 50% "
-            "in digitized workflows overall."
+            "Published automation and machine-vision case studies commonly report 60\u201370% reductions "
+            "in scrap or inspection errors. Results vary by line type and baseline defect rate; "
+            "SCOTT engineering validates specific projections against your process data."
         ),
-        "source": "Source: McKinsey & Company, The state of AI in manufacturing, 2024",
+        "source": "📊 Industry Research: Published automation and machine-vision case studies; range is representative, not a universal benchmark",
     },
     "leadtime": {
         "eyebrow": "WHAT'S AT STAKE",
@@ -77,7 +76,7 @@ STATS = {
             "historically. The pace of integration has accelerated roughly 2\u00d7 as suppliers, "
             "tooling, and standards have matured."
         ),
-        "source": "Source: McKinsey & Company, The next frontier of automation in manufacturing, 2024",
+        "source": "📊 Industry Research: Automation ROI literature broadly; McKinsey & Company, The Next Frontier of Automation in Manufacturing, 2024",
     },
     "ergonomics": {
         "eyebrow": "WHAT'S AT STAKE",
@@ -88,18 +87,18 @@ STATS = {
             "private industry. These injuries are the leading category of musculoskeletal disorders "
             "in manufacturing settings \u2014 and the most addressable by automation."
         ),
-        "source": "Source: U.S. Bureau of Labor Statistics, 2023\u201324 data",
+        "source": "📊 Industry Research: U.S. Bureau of Labor Statistics, Survey of Occupational Injuries and Illnesses, 2024",
     },
     "compliance": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE COST OF A CITATION",
-        "big_number": "$16,131",
+        "big_number": "$16,550",
         "supporting": (
-            "Maximum penalty for a serious OSHA violation in 2024. Each cUL/UL 508A and 698A "
+            "Maximum penalty for a serious OSHA violation as of 2025–2026. Each cUL/UL 508A and 698A "
             "certification SCOTT carries on its control packages removes a common audit finding "
             "before an inspector even arrives."
         ),
-        "source": "Source: U.S. Occupational Safety and Health Administration, penalty schedule effective 2024",
+        "source": "📊 Industry Research: U.S. Occupational Safety and Health Administration, penalty schedule effective Jan. 15, 2025 (current through 2026)",
     },
     "energy": {
         "eyebrow": "WHAT'S AT STAKE",
@@ -110,29 +109,29 @@ STATS = {
             "are replaced with variable-frequency drives. Savings persist for the life of the system "
             "and compound with utility rate increases."
         ),
-        "source": "Source: U.S. Department of Energy, Industrial Assessment Center benchmarking data",
+        "source": "📊 Industry Research: U.S. Department of Energy / Hydraulic Institute — VFD energy savings guidance; 20–50% range is conservative relative to published studies",
     },
     "floorspace": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "RECLAIMING THE FLOOR",
-        "big_number": "30\u201340%",
+        "big_number": "____%",
         "supporting": (
-            "Typical footprint reduction when legacy layouts are replaced with vertical-reservoir HPUs "
-            "and integrated control packages. The reclaimed space often pays for the project on its own "
-            "in plants where expansion is constrained."
+            "Estimated footprint reduction for this project, based on SCOTT Industrial Systems project experience. "
+            "Enter the projected percentage above before presenting. "
+           "Reclaimed floor space often pays for the project on its own in plants where expansion is constrained."
         ),
-        "source": "Source: Industry-typical range \u2014 validated per project against your facility plan",
+        "source": "🔧 SCOTT Project Experience: Typical range based on SCOTT Industrial Systems project history; validated per project against your facility plan",
     },
     "retention": {
         "eyebrow": "WHAT'S AT STAKE",
         "headline": "THE RETENTION FACTOR",
         "big_number": "2.7\u00d7",
         "supporting": (
-            "Manufacturing employees with modern, automated tools are 2.7\u00d7 less likely to leave "
-            "than those without. Average sector turnover sits above 40% in many segments \u2014 a number "
-            "automation can move."
+            "Employees who believe they can build future-ready skills are 2.7\u00d7 less likely to leave "
+            "within 12 months. Modernization and automation create the skill-building environment that "
+            "drives this outcome \u2014 and average sector turnover above 40% makes the stakes clear."
         ),
-        "source": "Source: Deloitte, Workforce Experience in Manufacturing, 2024",
+        "source": "📊 Industry Research: Deloitte & The Manufacturing Institute, Taking Charge: Manufacturers Support Growth with Active Workforce Strategies, 2024",
     },
     "insurance": {
         "eyebrow": "WHAT'S AT STAKE",
@@ -143,16 +142,16 @@ STATS = {
             "across three years of premium calculations. Even one prevented claim can reset the "
             "trajectory."
         ),
-        "source": "Source: NCCI Experience Rating Plan Manual, industry-typical range",
+        "source": "🔧 SCOTT Project Experience: Consistent with NCCI Experience Rating Plan actuarial methodology; no single published benchmark — present as industry-typical range",
     },
 }
-
-
+ 
+ 
 def get_stat(tag_id: str) -> dict:
     """Return the stat record for a value-driver tag, or None if unknown."""
     return STATS.get(tag_id)
-
-
+ 
+ 
 def all_tags() -> list:
     """Return the list of known tag ids (for validation)."""
     return list(STATS.keys())
