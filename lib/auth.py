@@ -15,6 +15,7 @@ This file is intentionally the ONLY place that knows about the cookie name,
 the signing secret, and the verification logic, so both api/index.py and
 api/generate.py stay in sync by importing from here rather than duplicating
 logic.
+
 Required environment variables (set in Vercel → Settings → Environment Variables):
   SUPABASE_JWT_SECRET   — the JWT secret from Supabase project settings
                           (Settings → API → JWT Secret). Used to verify the
@@ -33,28 +34,37 @@ import hashlib
 import base64
 
 PORTAL_LOGIN_URL = "https://www.siscc-portal.com/login"
+
 # Name of this app's own session cookie (NOT the Supabase token).
 SESSION_COOKIE_NAME = "scott_deck_session"
+
 # How long our own session cookie lasts after a successful handoff.
 SESSION_LIFETIME_SECONDS = 8 * 60 * 60  # 8 hours
+
 
 # ---------------------------------------------------------------------------
 # Base64url helpers (JWTs use base64url without padding)
 # ---------------------------------------------------------------------------
+
 def _b64url_decode(segment: str) -> bytes:
     padding = "=" * (-len(segment) % 4)
     return base64.urlsafe_b64decode(segment + padding)
 
+
 def _b64url_encode(data: bytes) -> str:
     return base64.urlsafe_b64encode(data).rstrip(b"=").decode("ascii")
+
 
 # ---------------------------------------------------------------------------
 # Step 2 verification: validate the Supabase access_token signature
 # ---------------------------------------------------------------------------
+
 def verify_supabase_token(token: str) -> dict:
     """Verify a Supabase Auth JWT's signature and expiry.
+
     Returns the decoded payload dict if valid.
     Raises ValueError with a specific reason if invalid.
+
     This checks the signature using HS256 against SUPABASE_JWT_SECRET — it
     does NOT call out to Supabase over the network. This is the standard,
     correct way to verify a Supabase access_token server-side.
@@ -68,6 +78,7 @@ def verify_supabase_token(token: str) -> dict:
 
     if not token or token.count(".") != 2:
         raise ValueError("Malformed token (expected a 3-part JWT)")
+
     header_b64, payload_b64, sig_b64 = token.split(".")
 
     # Re-verify the signature ourselves (do not trust the alg header blindly —
@@ -83,18 +94,20 @@ def verify_supabase_token(token: str) -> dict:
         payload = json.loads(_b64url_decode(payload_b64))
     except (ValueError, json.JSONDecodeError):
         raise ValueError("Token payload is not valid JSON")
-    
-    exp = payload.get("exp")
 
+    exp = payload.get("exp")
     if exp is None:
         raise ValueError("Token has no expiry claim")
     if time.time() >= float(exp):
         raise ValueError("Token has expired")
+
     return payload
+
 
 # ---------------------------------------------------------------------------
 # Step 3: this app's OWN session cookie (separate from the Supabase token)
 # ---------------------------------------------------------------------------
+
 def _session_secret() -> bytes:
     secret = os.environ.get("SESSION_SECRET")
     if not secret:
@@ -104,8 +117,10 @@ def _session_secret() -> bytes:
         )
     return secret.encode("utf-8")
 
+
 def create_session_cookie_value(user_id: str) -> str:
     """Create a signed, self-contained session value: base64(payload).signature
+
     This is NOT a Supabase token — it's a small token this app mints itself
     after verifying the Supabase token once, so subsequent requests don't
     need to re-verify the original Supabase JWT.
@@ -120,24 +135,30 @@ def create_session_cookie_value(user_id: str) -> str:
     sig_b64 = _b64url_encode(sig)
     return f"{payload_b64}.{sig_b64}"
 
+
 def verify_session_cookie_value(value: str) -> bool:
     """Return True if the session cookie value is valid and unexpired."""
     try:
         payload_b64, sig_b64 = value.split(".")
     except ValueError:
         return False
+
     expected_sig = hmac.new(_session_secret(), payload_b64.encode("ascii"), hashlib.sha256).digest()
     actual_sig = _b64url_decode(sig_b64)
     if not hmac.compare_digest(expected_sig, actual_sig):
         return False
+
     try:
         payload = json.loads(_b64url_decode(payload_b64))
     except (ValueError, json.JSONDecodeError):
         return False
+
     exp = payload.get("exp")
     if exp is None or time.time() >= float(exp):
         return False
+
     return True
+
 
 def build_session_cookie_header(user_id: str) -> str:
     """Build the Set-Cookie header value for a fresh, valid session."""
@@ -148,15 +169,18 @@ def build_session_cookie_header(user_id: str) -> str:
         f"Path=/; "
         f"HttpOnly; "
         f"Secure; "
-        f"SameSite=None"  # Required for cross-site cookie delivery (portal -> vercel.app)
+        f"SameSite=None"
     )
+
 
 def build_clear_cookie_header() -> str:
     """Build a Set-Cookie header that immediately expires the session cookie."""
     return f"{SESSION_COOKIE_NAME}=deleted; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=None"
 
+
 def request_has_valid_session(headers) -> bool:
     """Check an incoming request's Cookie header for a valid session.
+
     `headers` is anything with a .get(name, default) interface, e.g. the
     BaseHTTPRequestHandler's self.headers.
     """
@@ -166,6 +190,7 @@ def request_has_valid_session(headers) -> bool:
     if not session_value:
         return False
     return verify_session_cookie_value(session_value)
+
 
 def _parse_cookie_header(cookie_header: str) -> dict:
     cookies = {}
