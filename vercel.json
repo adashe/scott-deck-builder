@@ -2,17 +2,13 @@
     "version": 2,
     "functions": {
         "api/generate.py": {
-            "runtime": "@vercel/python@4.3.0",
             "maxDuration": 60,
             "includeFiles": "templates/**"
         },
         "api/index.py": {
-            "runtime": "@vercel/python@4.3.0",
             "includeFiles": "templates/**"
         },
-        "api/auth_callback.py": {
-            "runtime": "@vercel/python@4.3.0"
-        }
+        "api/auth_callback.py": {}
     },
     "rewrites": [
         {
