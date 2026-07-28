@@ -20,7 +20,7 @@
         },
         {
             "source": "/scott-deck-builder/api/:path*",
-            "destination": "https://www.maps.google.com"
+            "destination": "/api/generate"
         },
         {
             "source": "/api/generate",
