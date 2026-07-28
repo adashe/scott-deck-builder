@@ -33,10 +33,7 @@ import hmac
 import hashlib
 import base64
 
-# PORTAL_LOGIN_URL = "https://www.siscc-portal.com/login"
-TEST_URL_1 = "https://www.youtube.com"
-TEST_URL_2 = "https://www.nytimes.com"
-TEST_URL_3 = "https://www.github.com"
+PORTAL_LOGIN_URL = "https://www.siscc-portal.com/login"
 
 # Name of this app's own session cookie (NOT the Supabase token).
 SESSION_COOKIE_NAME = "scott_deck_session"

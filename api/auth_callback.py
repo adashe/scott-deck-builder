@@ -31,11 +31,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from lib.auth import (
     verify_supabase_token,
     build_session_cookie_header,
-    PORTAL_LOGIN_URL,
-    TEST_URL_1, 
-    TEST_URL_2, 
-    TEST_URL_3
+    PORTAL_LOGIN_URL
 )
+
+TEST_URL_1 = "https://www.youtube.com"
+TEST_URL_2 = "https://www.nytimes.com"
+TEST_URL_3 = "https://www.github.com"
 
 # Where to send the user after a successful login handoff.
 # Must be the absolute Vercel URL so the browser stays on the same domain
