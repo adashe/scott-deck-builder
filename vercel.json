@@ -51,7 +51,7 @@
             "destination": "/:path*"
         },
         {
-            "source": "/(.*)",
+            "source": "/((?!api/).*)",
             "destination": "/api/index"
         }
     ],
