@@ -32,6 +32,9 @@ from lib.auth import (
     verify_supabase_token,
     build_session_cookie_header,
     PORTAL_LOGIN_URL,
+    TEST_URL_1, 
+    TEST_URL_2, 
+    TEST_URL_3
 )
 
 # Where to send the user after a successful login handoff.
@@ -51,7 +54,7 @@ class handler(BaseHTTPRequestHandler):
             token = token_values[0] if token_values else None
 
             if not token:
-                return self._redirect_to_login()
+                return self._redirect_to_login_1()
 
             try:
                 payload = verify_supabase_token(token)
@@ -79,7 +82,7 @@ class handler(BaseHTTPRequestHandler):
 
                 except Exception as diag_err:
                     print(f"AUTH CALLBACK: token rejected — {e} (diagnostic also failed: {diag_err})", file=sys.stderr)
-                return self._redirect_to_login()
+                return self._redirect_to_login_2()
 
             # Token is valid. Mint our own session cookie and send the user
             # to the form with the token no longer present in the URL.
@@ -95,10 +98,28 @@ class handler(BaseHTTPRequestHandler):
 
         except Exception:
             print("ERROR in /auth-callback:", traceback.format_exc(), file=sys.stderr)
-            self._redirect_to_login()
+            self._redirect_to_login_3()
 
     def _redirect_to_login(self):
         self.send_response(302)
         self.send_header("Location", PORTAL_LOGIN_URL)
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+
+    def _redirect_to_login_1(self):
+        self.send_response(302)
+        self.send_header("Location", TEST_URL_1)
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+
+    def _redirect_to_login_2(self):
+        self.send_response(302)
+        self.send_header("Location", TEST_URL_2)
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+
+    def _redirect_to_login_3(self):
+        self.send_response(302)
+        self.send_header("Location", TEST_URL_3)
         self.send_header("Cache-Control", "no-store")
         self.end_headers()
