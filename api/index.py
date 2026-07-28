@@ -19,6 +19,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lib.auth import request_has_valid_session, PORTAL_LOGIN_URL
 
+TEST_URL_A = "https://www.reddit.com"
+TEST_URL_B = "https://www.washingtonpost.com"
+
 _INDEX_HTML_CANDIDATES = [
     os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "templates", "index.html"),
     "templates/index.html",
@@ -40,7 +43,7 @@ class handler(BaseHTTPRequestHandler):
         try:
             if not request_has_valid_session(self.headers):
                 self.send_response(302)
-                self.send_header("Location", PORTAL_LOGIN_URL)
+                self.send_header("Location", TEST_URL_A)
                 self.send_header("Cache-Control", "no-store")
                 self.end_headers()
                 return
@@ -57,6 +60,6 @@ class handler(BaseHTTPRequestHandler):
         except Exception:
             print("ERROR in page guard:", traceback.format_exc(), file=sys.stderr)
             self.send_response(302)
-            self.send_header("Location", PORTAL_LOGIN_URL)
+            self.send_header("Location", TEST_URL_B)
             self.send_header("Cache-Control", "no-store")
             self.end_headers()
