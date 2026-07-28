@@ -169,7 +169,7 @@ def build_session_cookie_header(user_id: str) -> str:
         f"Path=/; "
         f"HttpOnly; "
         f"Secure; "
-        f"SameSite=None"
+        f"SameSite=Lax"
     )
 
 
