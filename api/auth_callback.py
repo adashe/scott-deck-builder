@@ -97,25 +97,8 @@ class handler(BaseHTTPRequestHandler):
             print("ERROR in /auth-callback:", traceback.format_exc(), file=sys.stderr)
             self._redirect_to_login()
 
-    # def _redirect_to_login(self):
-    #     self.send_response(302)
-    #     self.send_header("Location", PORTAL_LOGIN_URL)
-    #     self.send_header("Cache-Control", "no-store")
-    #     self.end_headers()
-
     def _redirect_to_login(self):
-        # TEMPORARY DEBUG: Print the exact error on your browser screen instead of redirecting
-        self.send_response(200)
-        self.send_header("Content-Type", "text/plain")
+        self.send_response(302)
+        self.send_header("Location", PORTAL_LOGIN_URL)
+        self.send_header("Cache-Control", "no-store")
         self.end_headers()
-        
-        import traceback
-        exc_type, exc_value, exc_traceback = sys.exc_info()
-        
-        if exc_type:
-            error_msg = f"Error Type: {exc_type.__name__}\nError Value: {exc_value}\n\nTraceback:\n"
-            error_msg += "".join(traceback.format_exception(exc_type, exc_value, exc_traceback))
-        else:
-            error_msg = "No exception caught, but triggered redirect (likely a missing token or manual validation fallback)."
-            
-        self.wfile.write(error_msg.encode('utf-8'))
