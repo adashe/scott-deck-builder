@@ -19,10 +19,6 @@
             "destination": "/js/:asset*"
         },
         {
-            "source": "/scott-deck-builder/api/:path*",
-            "destination": "/api/generate"
-        },
-        {
             "source": "/api/generate",
             "destination": "/api/generate"
         },
