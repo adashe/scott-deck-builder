@@ -20,7 +20,7 @@
         },
         {
             "source": "/scott-deck-builder/api/:path*",
-            "destination": "https://fonts.google.com/icons"
+            "destination": "https://www.maps.google.com"
         },
         {
             "source": "/api/generate",
@@ -28,11 +28,11 @@
         },
         {
             "source": "/scott-deck-builder/auth-callback",
-            "destination": "https://www.suncoastcontrols.com"
+            "destination": "/api/auth_callback"
         },
         {
             "source": "/auth-callback",
-            "destination": "https://www.figma.com"
+            "destination": "/api/auth_callback"
         },
         {
             "source": "/scott-deck-builder/",
