@@ -43,7 +43,8 @@ TEST_URL_3 = "https://www.github.com"
 # as the cookie (vercel.app). If we use a relative URL, the portal proxy
 # resolves it to siscc-portal.com and the cookie never gets sent.
 
-FORM_URL = "https://scott-deck-builder.vercel.app/"
+# FORM_URL = "https://scott-deck-builder.vercel.app/"
+FORM_URL = "https://www.instagram.com"
 
 class handler(BaseHTTPRequestHandler): 
 
