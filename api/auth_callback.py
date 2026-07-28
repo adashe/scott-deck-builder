@@ -100,11 +100,11 @@ class handler(BaseHTTPRequestHandler):
             print("ERROR in /auth-callback:", traceback.format_exc(), file=sys.stderr)
             self._redirect_to_login_3()
 
-    def _redirect_to_login(self):
-        self.send_response(302)
-        self.send_header("Location", PORTAL_LOGIN_URL)
-        self.send_header("Cache-Control", "no-store")
-        self.end_headers()
+    # def _redirect_to_login(self):
+    #     self.send_response(302)
+    #     self.send_header("Location", PORTAL_LOGIN_URL)
+    #     self.send_header("Cache-Control", "no-store")
+    #     self.end_headers()
 
     def _redirect_to_login_1(self):
         self.send_response(302)
