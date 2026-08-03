@@ -27,14 +27,6 @@
             "destination": "/api/generate"
         },
         {
-            "source": "/scott-deck-builder/auth-callback",
-            "destination": "/api/auth_callback"
-        },
-        {
-            "source": "/auth-callback",
-            "destination": "/api/auth_callback"
-        },
-        {
             "source": "/scott-deck-builder/",
             "destination": "/api/index"
         },
