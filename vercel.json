@@ -20,31 +20,15 @@
             "destination": "/js/:asset*"
         },
         {
-            "source": "/scott-deck-builder/api/:path*",
-            "destination": "/api/generate.py"
-        },
-        {
-            "source": "/api/:path*",
-            "destination": "/api/generate.py"
+            "source": "/scott-deck-builder",
+            "destination": "/api/index.py"
         },
         {
             "source": "/scott-deck-builder/",
             "destination": "/api/index.py"
         },
         {
-            "source": "/scott-deck-builder",
-            "destination": "/api/index.py"
-        },
-        {
             "source": "/",
-            "destination": "/api/index.py"
-        },
-        {
-            "source": "/scott-deck-builder/:path*",
-            "destination": "/:path*"
-        },
-        {
-            "source": "/(.*)",
             "destination": "/api/index.py"
         }
     ],

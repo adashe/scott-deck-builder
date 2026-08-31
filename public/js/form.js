@@ -875,13 +875,10 @@ async function handleSubmit(e) {
     });
 
     try {
-        const response = await fetch(
-            "https://scott-deck-builder.vercel.app/api/generate",
-            {
-                method: "POST",
-                body: fd,
-            },
-        );
+        const response = await fetch("/api/generate", {
+            method: "POST",
+            body: fd,
+        });
 
         if (!response.ok) {
             const errText = await response.text().catch(() => "Unknown error");
@@ -892,7 +889,8 @@ async function handleSubmit(e) {
         // streaming the zip directly — avoids the 4.5 MB response payload limit.
         const data = await response.json();
         if (data.error) throw new Error(data.error);
-        if (!data.downloadUrl) throw new Error("No download URL returned from server.");
+        if (!data.downloadUrl)
+            throw new Error("No download URL returned from server.");
 
         showOverlay("Done!", "Your download should start automatically.");
 
