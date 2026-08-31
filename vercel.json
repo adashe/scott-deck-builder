@@ -29,15 +29,15 @@
         },
         {
             "source": "/scott-deck-builder/",
-            "destination": "/api/index"
+            "destination": "/api/index.py"
         },
         {
             "source": "/scott-deck-builder",
-            "destination": "/api/index"
+            "destination": "/api/index.py"
         },
         {
             "source": "/",
-            "destination": "/api/index"
+            "destination": "/api/index.py"
         },
         {
             "source": "/scott-deck-builder/:path*",
@@ -45,7 +45,7 @@
         },
         {
             "source": "/(.*)",
-            "destination": "/api/index"
+            "destination": "/api/index.py"
         }
     ],
     "cleanUrls": true
