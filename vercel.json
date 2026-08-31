@@ -21,11 +21,11 @@
         },
         {
             "source": "/scott-deck-builder/api/:path*",
-            "destination": "/api/generate"
+            "destination": "/api/generate.py"
         },
         {
             "source": "/api/:path*",
-            "destination": "/api/generate"
+            "destination": "/api/generate.py"
         },
         {
             "source": "/scott-deck-builder/",
