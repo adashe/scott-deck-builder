@@ -3,7 +3,8 @@
     "functions": {
         "api/generate.py": {
             "maxDuration": 60,
-            "includeFiles": "templates/**"
+            "includeFiles": "templates/**",
+            "memory": 1024
         },
         "api/index.py": {
             "includeFiles": "templates/**"
@@ -23,7 +24,7 @@
             "destination": "/api/generate"
         },
         {
-            "source": "/api/generate",
+            "source": "/api/:path*",
             "destination": "/api/generate"
         },
         {
