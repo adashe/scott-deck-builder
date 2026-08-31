@@ -42,10 +42,6 @@
         {
             "source": "/scott-deck-builder/:path*",
             "destination": "/:path*"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/api/index.py"
         }
     ],
     "cleanUrls": true
