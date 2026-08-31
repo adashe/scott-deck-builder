@@ -28,10 +28,6 @@
             "destination": "/api/generate"
         },
         {
-            "src": "/api/generate",
-            "dest": "/api/generate.py"
-        },
-        {
             "source": "/scott-deck-builder/",
             "destination": "/api/index"
         },
