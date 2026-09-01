@@ -875,7 +875,7 @@ async function handleSubmit(e) {
     });
 
     try {
-        const response = await fetch("/api/generate.py", {
+        const response = await fetch("/api/generate", {
             method: "POST",
             body: fd,
         });
