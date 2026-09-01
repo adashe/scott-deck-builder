@@ -21,27 +21,31 @@
         },
         {
             "source": "/scott-deck-builder/api/:path*",
-            "destination": "/api/generate.py"
+            "destination": "/api/generate"
         },
         {
             "source": "/api/:path*",
-            "destination": "/api/generate.py"
+            "destination": "/api/generate"
         },
         {
             "source": "/scott-deck-builder/",
-            "destination": "/api/index.py"
+            "destination": "/api/index"
         },
         {
             "source": "/scott-deck-builder",
-            "destination": "/api/index.py"
+            "destination": "/api/index"
         },
         {
             "source": "/",
-            "destination": "/api/index.py"
+            "destination": "/api/index"
         },
         {
             "source": "/scott-deck-builder/:path*",
             "destination": "/:path*"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/api/index"
         }
     ],
     "cleanUrls": true
