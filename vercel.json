@@ -3,9 +3,7 @@
     "functions": {
         "api/generate.py": {
             "maxDuration": 60,
-            "includeFiles": "templates/**"
-        },
-        "api/index.py": {
+            "memory": 1024,
             "includeFiles": "templates/**"
         }
     },
@@ -23,20 +21,8 @@
             "destination": "/api/generate"
         },
         {
-            "source": "/api/generate",
+            "source": "/api/:path*",
             "destination": "/api/generate"
-        },
-        {
-            "source": "/scott-deck-builder/",
-            "destination": "/api/index"
-        },
-        {
-            "source": "/scott-deck-builder",
-            "destination": "/api/index"
-        },
-        {
-            "source": "/",
-            "destination": "/api/index"
         },
         {
             "source": "/scott-deck-builder/:path*",
@@ -44,7 +30,7 @@
         },
         {
             "source": "/(.*)",
-            "destination": "/api/index"
+            "destination": "/index.html"
         }
     ],
     "cleanUrls": true
