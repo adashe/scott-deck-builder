@@ -3,7 +3,8 @@ name = "my-vercel-api"
 version = "0.1.0"
 dependencies = [
     "Pillow",
-    "python-pptx"
+    "python-pptx",
+    "python-docx"
 ]
 
 [tool.vercel]
