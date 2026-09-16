@@ -9,31 +9,7 @@
     },
     "rewrites": [
         {
-            "source": "/css/:asset*",
-            "destination": "/css/:asset*"
-        },
-        {
-            "source": "/js/:asset*",
-            "destination": "/js/:asset*"
-        },
-        {
-            "source": "/api/(.*)",
-            "destination": "api/generate.py"
-        },
-        {
-            "source": "/api/generate",
-            "destination": "api/generate.py"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/public/$1"
-        },
-        {
             "source": "/scott-deck-builder/api/:path*",
-            "destination": "/api/generate"
-        },
-        {
-            "source": "/api/:path*",
             "destination": "/api/generate"
         },
         {
@@ -41,8 +17,28 @@
             "destination": "/:path*"
         },
         {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "source": "/api/(.*)",
+            "destination": "/api/generate.py"
+        },
+        {
+            "source": "/api/generate",
+            "destination": "/api/generate.py"
+        },
+        {
+            "source": "/css/:asset*",
+            "destination": "/public/css/:asset*"
+        },
+        {
+            "source": "/js/:asset*",
+            "destination": "/public/js/:asset*"
+        },
+        {
+            "source": "/",
+            "destination": "/public/index.html"
+        },
+        {
+            "source": "/index.html",
+            "destination": "/public/index.html"
         }
     ],
     "cleanUrls": true
