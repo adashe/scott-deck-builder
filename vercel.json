@@ -21,6 +21,14 @@
             "destination": "api/generate.py"
         },
         {
+            "source": "/api/generate",
+            "destination": "api/generate.py"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/public/$1"
+        },
+        {
             "source": "/scott-deck-builder/api/:path*",
             "destination": "/api/generate"
         },
