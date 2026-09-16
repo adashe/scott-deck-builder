@@ -26,3 +26,6 @@ output/
 
 # Node (just in case)
 node_modules/
+
+.vercel
+.env*
