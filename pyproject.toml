@@ -1,2 +1,7 @@
+[project]
+name = "my-vercel-api"
+version = "0.1.0"
+dependencies = []
+
 [tool.vercel]
 entrypoint = "api.generate:handler"
