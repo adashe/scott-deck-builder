@@ -17,16 +17,16 @@
             "destination": "/js/:asset*"
         },
         {
+            "source": "/api/(.*)",
+            "destination": "api/generate.py"
+        },
+        {
             "source": "/scott-deck-builder/api/:path*",
             "destination": "/api/generate"
         },
         {
             "source": "/api/:path*",
             "destination": "/api/generate"
-        },
-        {
-            "source": "/api/(.*)",
-            "destination": "api/generate.py"
         },
         {
             "source": "/scott-deck-builder/:path*",
